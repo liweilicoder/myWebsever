@@ -1,2 +1,2 @@
-# myWebsever
-学习《Linux高性能服务器》，抄写源码先
+# LinuxWebServerCodes
+《linux》高性能服务器编程 游双 sourcecode
