@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
     } else {
         char remote[INET_ADDRSTRLEN];
          printf( "connected with ip: %s and port: %d\n", 
-            inet_ntop( AF_INET, &client.sin_addr, remote, INET_ADDRSTRLEN ), ntohs( client.sin_port ) );
+            inet_ntop( AF_INET, &client.sin_addr, remote, INET_ADDRSTRLEN ), ntohs(client.sin_port));
         close( connfd );
 
     }
