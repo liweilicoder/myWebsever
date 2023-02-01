@@ -12,7 +12,7 @@
 
 int main( int argc, char* argv[] )
 {
-    if( argc <= 3 )
+    if( argc <= 3)
     {
         printf( "usage: %s ip_address port_number receive_buffer_size\n", basename( argv[0] ) );
         return 1;
