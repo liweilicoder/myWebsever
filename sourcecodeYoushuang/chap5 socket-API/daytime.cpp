@@ -27,6 +27,6 @@ int main (int argc, char *argv[]) {
 	result = read( sockfd, buffer, sizeof( buffer ) );
 	assert( result > 0 );
 	buffer[ result ] = '\0';
-	printf( "the day tiem is: %s", buffer );
+	printf( "the day time is: %s", buffer );
 	close( sockfd );
 }
