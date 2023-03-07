@@ -149,7 +149,7 @@ string HttpResponse::GetFileType_() {
     /* 判断文件类型 */
     string::size_type idx = path_.find_last_of('.');
     if(idx == string::npos) {
-        return "text/plain";
+        return "text/plain";   // 默认文件类型
     }
     string suffix = path_.substr(idx);
     if(SUFFIX_TYPE.count(suffix) == 1) {

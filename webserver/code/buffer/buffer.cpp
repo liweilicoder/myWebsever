@@ -52,7 +52,7 @@ void Buffer::HasWritten(size_t len) {
     writePos_ += len;
 } 
 
-void Buffer::Append(const std::string& str) {
+void Buffer::Append(const std::string& str) { //写缓冲区中添加数据
     Append(str.data(), str.length());
 }
 
@@ -120,7 +120,7 @@ char* Buffer::BeginPtr_() {
 }
 
 const char* Buffer::BeginPtr_() const {
-    return &*buffer_.begin();
+    return &*buffer_.begin();  // iterator->buffer_[0]->char*
 }
 
 void Buffer::MakeSpace_(size_t len) {

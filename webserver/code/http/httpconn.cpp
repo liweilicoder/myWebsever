@@ -66,13 +66,13 @@ ssize_t HttpConn::read(int* saveErrno) {
 ssize_t HttpConn::write(int* saveErrno) {
     ssize_t len = -1;
     do {
-        len = writev(fd_, iov_, iovCnt_);
+        len = writev(fd_, iov_, iovCnt_);  // write写完第一块内存，在写第二块内存
         if(len <= 0) {
             *saveErrno = errno;
             break;
         }
         if(iov_[0].iov_len + iov_[1].iov_len  == 0) { break; } /* 传输结束 */
-        else if(static_cast<size_t>(len) > iov_[0].iov_len) {
+        else if(static_cast<size_t>(len) > iov_[0].iov_len) {  // 第一块内存writeBuff_全部发送，第二块内存mmFile_部分发送
             iov_[1].iov_base = (uint8_t*) iov_[1].iov_base + (len - iov_[0].iov_len);
             iov_[1].iov_len -= (len - iov_[0].iov_len);
             if(iov_[0].iov_len) {
@@ -80,7 +80,7 @@ ssize_t HttpConn::write(int* saveErrno) {
                 iov_[0].iov_len = 0;
             }
         }
-        else {
+        else { //第一块内存writeBuff_没有发送完
             iov_[0].iov_base = (uint8_t*)iov_[0].iov_base + len; 
             iov_[0].iov_len -= len; 
             writeBuff_.Retrieve(len);

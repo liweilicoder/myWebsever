@@ -51,7 +51,7 @@ private:
     static int SetFdNonblock(int fd);  // 设置fd非阻塞
 
     int port_;           // 端口
-    bool openLinger_;    //是否打卡优雅关闭
+    bool openLinger_;    //是否打开优雅关闭
     int timeoutMS_;      // 超时时间，毫秒MS
     bool isClose_;       //是否关闭
     int listenFd_;       // 监听的文件描述符

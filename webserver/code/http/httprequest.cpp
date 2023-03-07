@@ -52,7 +52,7 @@ bool HttpRequest::parse(Buffer& buff) {
             break;
         }
         if(lineEnd == buff.BeginWrite()) { break; }
-        buff.RetrieveUntil(lineEnd + 2); // 移动读指针
+        buff.RetrieveUntil(lineEnd + 2); // 移动读指针，pass \r\n
     }
     LOG_DEBUG("[%s], [%s], [%s]", method_.c_str(), path_.c_str(), version_.c_str());
     return true;
@@ -60,12 +60,12 @@ bool HttpRequest::parse(Buffer& buff) {
 
 void HttpRequest::ParsePath_() {
     if(path_ == "/") {
-        path_ = "/index.html"; 
+        path_ = "/index.html";  // 默认访问网页
     }
     else {
         for(auto &item: DEFAULT_HTML) {
             if(item == path_) {
-                path_ += ".html";
+                path_ += ".html";  // /login -> // /login.html
                 break;
             }
         }
@@ -92,7 +92,7 @@ void HttpRequest::ParseHeader_(const string& line) {
     if(regex_match(line, subMatch, patten)) {
         header_[subMatch[1]] = subMatch[2];
     }
-    else {
+    else {  // 简单的正则匹配，认为传来的http请求报文正确，则匹配不上时，就认为出现了空行，开始解析请求体
         state_ = BODY;
     }
 }
@@ -129,7 +129,7 @@ void HttpRequest::ParsePost_() {
     }   
 }
 
-void HttpRequest::ParseFromUrlencoded_() {
+void HttpRequest::ParseFromUrlencoded_() { // username=root&password=1234
     if(body_.size() == 0) { return; }
 
     string key, value;

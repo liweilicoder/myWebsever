@@ -6,7 +6,7 @@ SqlConnPool::SqlConnPool() {
     freeCount_ = 0;
 }
 
-SqlConnPool* SqlConnPool::Instance() {
+SqlConnPool* SqlConnPool::Instance() { // 单例模式
     static SqlConnPool connPool;
     return &connPool;
 }

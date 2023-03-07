@@ -11,7 +11,7 @@
 
 class SqlConnPool {
 public:
-    static SqlConnPool *Instance();
+    static SqlConnPool *Instance(); // 单例模式
 
     MYSQL *GetConn();
     void FreeConn(MYSQL * conn);

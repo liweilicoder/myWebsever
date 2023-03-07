@@ -124,7 +124,7 @@ void WebServer::CloseConn_(HttpConn* client) {
 
 void WebServer::AddClient_(int fd, sockaddr_in addr) {
     assert(fd > 0);
-    users_[fd].init(fd, addr);
+    users_[fd].init(fd, addr); // 文件描述符作为客户连接的索引
     if(timeoutMS_ > 0) {
         timer_->add(fd, timeoutMS_, std::bind(&WebServer::CloseConn_, this, &users_[fd]));
     }
@@ -138,7 +138,7 @@ void WebServer::DealListen_() {
     socklen_t len = sizeof(addr);
     do {
         int fd = accept(listenFd_, (struct sockaddr *)&addr, &len);
-        if(fd <= 0) { return;}
+        if(fd <= 0) { return;} // ET模式返回通道，无连接则返回
         else if(HttpConn::userCount >= MAX_FD) {
             SendError_(fd, "Server busy!");
             LOG_WARN("Clients is full!");
